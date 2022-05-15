@@ -1,0 +1,8 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/selvinguez/Compi2Tarea1'
+flex -o tarea1_lexer.cpp tarea1.l
+g++ --std=c++11 -g -c -o tarea1_lexer.o tarea1_lexer.cpp
+g++ --std=c++11 -g -c -o main.o main.cpp
+g++ --std=c++11 -g -o tarea1 tarea1_lexer.o main.o
+make: Leaving directory '/home/selvinguez/Compi2Tarea1'
+ 
