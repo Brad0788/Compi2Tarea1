@@ -1,11 +1,12 @@
 #include <stdio.h>
-
+#include <map>
 using namespace std;
 
 extern FILE *yyin;
 
 extern int yylineno;
 
+//std::map<char*, int> mapa;
 
 //int yylex();
 //char* yylval;

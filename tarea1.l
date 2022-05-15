@@ -5,8 +5,9 @@
 %{
     //#define YYSTYPE char*
     #include "tokens.h"
+
     //extern char* yylval;
-   
+    
     
 %}
 
@@ -20,7 +21,7 @@ IDENTIFICADOR [A-Za-z][A-Za-z0-9]*
 "end" { return TK_END;}
 "write" { return TK_WRITE;}
 [0-9]+ { yylval.int_t = atoi(yytext); return TK_NUMBER;}
-{IDENTIFICADOR} { printf("%s\n",yytext); return TK_IDENTIFICADOR;}
+{IDENTIFICADOR} { yylval.string_t = strdup(yytext); return TK_IDENTIFICADOR;}
 
 ";" { return TK_PUNTOCOMA;}
 ":" { return TK_DOSPUNTOS;}

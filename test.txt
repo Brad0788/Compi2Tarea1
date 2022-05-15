@@ -4,6 +4,8 @@ x:int;
 
 y:int;
 
+z:int;
+
 end
 
 x = 54 + 100;
@@ -11,10 +13,11 @@ x = 54 + 100;
 y= 65;
 
 
-write(x + y);
+write(x +y);
 
-y = x * 4;
+y = x / 5;
 
 write(y);
 
 write(4-3);
+

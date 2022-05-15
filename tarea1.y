@@ -5,19 +5,20 @@
     #include <map>
     #include <string_view>
     #include <string>
+    #include <cstring>
     using namespace std;
     map<string, int> mapa;
     int yylex();
-    int variable = 10;
+    int variable = 0;
     extern int yylineno;
     void yyerror(const char * err){
         fprintf(stderr, "Line: %d, error: %s\n",yylineno,err);
     }
     void print_map()
     {
-        map<string, int>::iterator it;
-        for(it=mapa.begin(); it!=mapa.end(); ++it){
-           printf("%s\n",it->second);
+        for(auto it=mapa.begin(); it!=mapa.end(); ++it){
+            variable++;
+           printf("%s => %d\n",it->first.c_str(),it->second);
         }
     }
 
@@ -48,7 +49,7 @@ declarations_list:
     | declarations_list declarations
     ;
 
-declarations: TK_IDENTIFICADOR TK_DOSPUNTOS TK_INT TK_PUNTOCOMA {mapa.insert(pair<string,int>("hola",0)); print_map();}
+declarations: TK_IDENTIFICADOR TK_DOSPUNTOS TK_INT TK_PUNTOCOMA { mapa.insert(make_pair($1,0)); }//print_map();}
     ;
 
 statement_list: 
@@ -62,7 +63,7 @@ statement: write_stmt
 write_stmt: TK_WRITE TK_ABREP expression TK_CIERRAP TK_PUNTOCOMA { printf("%d\n",$3); }
     ;
 
-assignment_stmt: TK_IDENTIFICADOR TK_IGUAL expression TK_PUNTOCOMA 
+assignment_stmt: TK_IDENTIFICADOR TK_IGUAL expression TK_PUNTOCOMA {if(mapa.count($1)){ mapa.find($1)->second = $3;} else { printf("Error: variable %s no existe.\n",$1); return 0;} }
     ;
 expression: expression TK_MAS factor { $$ = $1 + $3; }
     | expression TK_MENOS factor { $$ = $1 - $3; }
@@ -73,7 +74,7 @@ factor: factor TK_MULTI term { $$ = $1 * $3; }
     | term { $$ = $1; }
     ;
 term: TK_NUMBER { $$ = $1; }
-    | TK_IDENTIFICADOR
+    | TK_IDENTIFICADOR { if(mapa.count($1)){ $$ = mapa.find($1)->second;} else { printf("Error: variable %s no existe.\n",$1); return 0;} }
     ;
 
 %%
