@@ -3,9 +3,9 @@
 %option yylineno
 %option caseless
 %{
-    #define YYSTYPE char*
+    //#define YYSTYPE char*
     #include "tokens.h"
-    extern char* yylval;
+    //extern char* yylval;
    
     
 %}
@@ -13,13 +13,14 @@
 IDENTIFICADOR [A-Za-z][A-Za-z0-9]*
 
 %%
+[ \t\n\r] {/*ignore*/ }
 "def" { return TK_DEF;}
 "declarations" { return TK_DECLARATION;}
 "int" { return TK_INT;}
 "end" { return TK_END;}
 "write" { return TK_WRITE;}
-[0-9]+ { yylval = strdup(yytext); return TK_NUMBER;}
-{IDENTIFICADOR} { yylval = yytext; return TK_IDENTIFICADOR;}
+[0-9]+ { yylval.int_t = atoi(yytext); return TK_NUMBER;}
+{IDENTIFICADOR} { printf("%s\n",yytext); return TK_IDENTIFICADOR;}
 
 ";" { return TK_PUNTOCOMA;}
 ":" { return TK_DOSPUNTOS;}
@@ -29,8 +30,10 @@ IDENTIFICADOR [A-Za-z][A-Za-z0-9]*
 "/" { return TK_DIVI;}
 "(" {return TK_ABREP;}
 ")" {return TK_CIERRAP;}
+"=" {return TK_IGUAL;}
 
-[ \t\n] {/*ignore*/ }
+
+
 . {printf("Invalid character %c\n",*yytext);}
 
 

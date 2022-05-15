@@ -7,8 +7,8 @@ extern FILE *yyin;
 extern int yylineno;
 
 
-int yylex();
-char* yylval;
+//int yylex();
+//char* yylval;
 int yyparse();
 
 int main(int argc, char * argv[]){

@@ -1,0 +1,20 @@
+def declarations
+
+x:int;
+
+y:int;
+
+end
+
+x = 54 + 100;
+
+y= 65;
+
+
+write(x + y);
+
+y = x * 4;
+
+write(y);
+
+write(4-3);
